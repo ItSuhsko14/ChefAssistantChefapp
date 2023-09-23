@@ -1,0 +1,82 @@
+
+.name {
+}
+
+.amount {
+}
+
+.ingredientContainer {
+	margin: 0 auto;
+	max-width:400px;
+	padding: 0;
+}
+
+.ingredient {
+	padding: 1%;
+	width: 100%;
+	margin: 1% auto;
+	align-items: center;
+	background-color: #F2EBEB;
+	border-radius: 4px;
+	border: 1px solid grey;	
+}
+
+.addIngredient {
+	display: flex;
+	justify-content: center;
+	padding: 0;
+	margin-top: 10px;
+	width:100%;
+}
+
+.alignRight {
+	margin-right: 0;
+	margin-left:0;
+}
+
+.container {
+	width: 100%;
+	background: grey;
+	margin-top: 0px;
+	padding: 10px;
+	font-family: roboto;
+	margin-left:0;
+	margin-right: auto;
+	box-sizing: border-box;
+}
+
+.header {
+	margin-top: 0;
+	width: 100%;
+}
+
+.deleteButton {
+	margin-left: 10px;
+	margin-right: 0px;
+}
+
+.marginTopBottom {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.fullWidth {
+	width: 100%;
+	
+	margin: 0;
+}
+
+.focus {
+
+}
+
+.cardNameInput {
+	width: 100%;
+	background-color: white;
+}
+
+.buttonContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
