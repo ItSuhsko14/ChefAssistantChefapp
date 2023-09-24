@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ChefAssistant/static/css/main.6a4314d4.css",
+    "main.js": "/ChefAssistant/static/js/main.50146550.js",
+    "static/js/787.e80a8abc.chunk.js": "/ChefAssistant/static/js/787.e80a8abc.chunk.js",
+    "index.html": "/ChefAssistant/index.html",
+    "main.6a4314d4.css.map": "/ChefAssistant/static/css/main.6a4314d4.css.map",
+    "main.50146550.js.map": "/ChefAssistant/static/js/main.50146550.js.map",
+    "787.e80a8abc.chunk.js.map": "/ChefAssistant/static/js/787.e80a8abc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6a4314d4.css",
+    "static/js/main.50146550.js"
+  ]
+}
