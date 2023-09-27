@@ -1,3 +1,4 @@
+import { createHashRouter } from 'react-router-dom';
 import { createBrowserRouter } from 'react-router-dom';
 import AllCards from '../pages/AllCards/AllCards.js'
 import Login from '../pages/Login/login.js'
@@ -12,13 +13,17 @@ import { Outlet } from "react-router-dom";
 
 const basenameURL = process.env.PUBLIC_URL;
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
+  // {
+  //   path: "/",
+  //   basename: "/ChefAssistantChefapp",
+  //   element: <div>Hello world!</div>,
+  // },
       {
         path: "/",
         basename: "/ChefAssistantChefapp",
         element: <Root />,
         children: [
-       
           {
             path: '/',
             element: <Outlet />,

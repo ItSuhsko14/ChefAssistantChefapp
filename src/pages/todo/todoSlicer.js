@@ -25,6 +25,6 @@ export const todoSlicer = createSlice({
 })
 
 export const { addTodo, removeTodo } = todoSlicer.actions;
-console.log(todoSlicer);
+
 
 export default todoSlicer.reducer;
