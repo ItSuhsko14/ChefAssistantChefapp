@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ChefAssistantChefapp/static/css/main.6a4314d4.css",
-    "main.js": "/ChefAssistantChefapp/static/js/main.37fe354c.js",
+    "main.js": "/ChefAssistantChefapp/static/js/main.b2ed1b0a.js",
     "static/js/787.e80a8abc.chunk.js": "/ChefAssistantChefapp/static/js/787.e80a8abc.chunk.js",
     "index.html": "/ChefAssistantChefapp/index.html",
     "main.6a4314d4.css.map": "/ChefAssistantChefapp/static/css/main.6a4314d4.css.map",
-    "main.37fe354c.js.map": "/ChefAssistantChefapp/static/js/main.37fe354c.js.map",
+    "main.b2ed1b0a.js.map": "/ChefAssistantChefapp/static/js/main.b2ed1b0a.js.map",
     "787.e80a8abc.chunk.js.map": "/ChefAssistantChefapp/static/js/787.e80a8abc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6a4314d4.css",
-    "static/js/main.37fe354c.js"
+    "static/js/main.b2ed1b0a.js"
   ]
 }
