@@ -10,10 +10,12 @@ import Root from './root.jsx'
 import { DynamicCardBreadcrumb } from '../router/DynamicCardBreadcrumb.js'
 import { Outlet } from "react-router-dom";
 
+const basenameURL = process.env.PUBLIC_URL;
+
 export const router = createBrowserRouter([
       {
         path: "/",
-        basename: "/ChefAssistant",
+        basename: "/ChefAssistantChefapp",
         element: <Root />,
         children: [
        
