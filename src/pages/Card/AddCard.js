@@ -37,7 +37,7 @@ function AddCard(props) {
     name: 'items',
   })
   
-    const currentCard = {};
+    let currentCard = {};
 
     useEffect( () => {
       if (isEditing) {
@@ -68,6 +68,7 @@ function AddCard(props) {
         }
     console.log(params);
     console.log(id)
+    console.log(isEditing)
 
     try {
       const { data } = isEditing 

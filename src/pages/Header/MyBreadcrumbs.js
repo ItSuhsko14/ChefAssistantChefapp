@@ -6,7 +6,6 @@ import {router} from "../../router/router.js";
 import { DynamicCardBreadcrumb } from '../../router/DynamicCardBreadcrumb.js';
 import { useSelector } from 'react-redux';
 import { useMatches } from "react-router-dom";
-import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -30,7 +29,7 @@ export default function MyBreadcrumbs() {
   <Stack spacing={2}>
       <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">  
         {breadcrumbs.map(({ match, breadcrumb }, index) => (
-          <>
+          <div key={match.pathname}>
             <NavLink key={match.pathname} to={match.pathname} >
               
               { breadcrumb.key === '/Card' ? (
@@ -53,7 +52,7 @@ export default function MyBreadcrumbs() {
               
             </NavLink>
             {index < breadcrumbs.length - 1 && <span></span>}
-          </>
+          </div>
         ))}
       </Breadcrumbs>
   </Stack>
