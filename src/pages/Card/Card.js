@@ -21,7 +21,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 function MyCard(props) {
-  const [currentCard, setCurrentCard] = useState();
+  const [currentCard, setCurrentCard] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   console.log(isLoading);
   const { id } = useParams();
@@ -30,9 +30,8 @@ function MyCard(props) {
   console.log(id)
   const cardId = id;
   const navigate = useNavigate();
-  
-
   const dispatch = useDispatch();
+  
 
   useEffect( () => {
     axios
@@ -74,7 +73,7 @@ function MyCard(props) {
   return (
     <>
       <Box className={styles.ingredientContainer}>
-        <h1 className={styles.header}>{currentCard.title}</h1>
+        <h1 className={styles.header}>{currentCard.title || 'No Title'}</h1>
         <p>{currentCard.text}</p>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 300 }} aria-label="simple table">

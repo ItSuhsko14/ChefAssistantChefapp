@@ -80,9 +80,11 @@ function AddCard(props) {
         }
 
       console.log(data);
+      
       const navigatePath = isEditing 
         ? `/card/${id}`
         : `/card/${data._id}`;
+      console.log(navigatePath);
       navigate(navigatePath);
     } catch (err) {
       console.log("Add card: card dont create");

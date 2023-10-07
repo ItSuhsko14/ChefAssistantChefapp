@@ -23,40 +23,38 @@ export default function MyBreadcrumbs() {
 
   return (
    
-    <>
-
-    
-  <Stack spacing={2}>
-      <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">  
-        {breadcrumbs.map(({ match, breadcrumb }, index) => (
-          <div key={match.pathname}>
-            <NavLink key={match.pathname} to={match.pathname} >
-              
-              { breadcrumb.key === '/Card' ? (
-                <Link
-                  underline="hover"
-                  sx={{ display: 'flex', alignItems: 'center' }}
-                  color="inherit"
-                >
-                  <DynamicCardBreadcrumb match={match}/> 
-                </Link>
-              ) : (
-                <Link
-                  underline="hover"
-                  sx={{ display: 'flex', alignItems: 'center' }}
-                  color="inherit"
-                >
-                  {breadcrumb}
-                </Link>
-              )}
-              
-            </NavLink>
-            {index < breadcrumbs.length - 1 && <span></span>}
-          </div>
-        ))}
-      </Breadcrumbs>
-  </Stack>
-    </>
+  <>
+    <Stack spacing={2}>
+        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">  
+          {breadcrumbs.map(({ match, breadcrumb }, index) => (
+            <div key={match.pathname}>
+              <NavLink key={match.pathname} to={match.pathname} >
+                
+                { breadcrumb.key === '/Card' ? (
+                  <Link
+                    underline="hover"
+                    sx={{ display: 'flex', alignItems: 'center' }}
+                    color="inherit"
+                  >
+                    <DynamicCardBreadcrumb match={match}/> 
+                  </Link>
+                ) : (
+                  <Link
+                    underline="hover"
+                    sx={{ display: 'flex', alignItems: 'center' }}
+                    color="inherit"
+                  >
+                    {breadcrumb}
+                  </Link>
+                )}
+                
+              </NavLink>
+              {index < breadcrumbs.length - 1 && <span></span>}
+            </div>
+          ))}
+        </Breadcrumbs>
+    </Stack>
+  </>
 
     // <div role="presentation" onClick={handleClick}>
     //   <Breadcrumbs aria-label="breadcrumb">
