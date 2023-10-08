@@ -60,15 +60,15 @@ function MyCard(props) {
       navigate('/getAll')
     }
 
-  // const total = () => {
-  //   const sum=0;
-  //   items.map( (item) => {
-  //     console.log(item.quantity)
-  //     sum = sum + item.quantity;
-  //   })
-  //   console.log(sum)
-  //   return sum;
-  // }
+  const total = () => {
+    const sum = items.reduce( (acc, item) => {
+      return acc + item.quantity
+    }, 0)
+    console.log(sum)
+    return sum;
+  }
+
+  total();
 
   return (
     <>
@@ -94,7 +94,7 @@ function MyCard(props) {
                 })}
               <TableRow>
                 <TableCell align="right">Total</TableCell>
-                <TableCell align="right">total value</TableCell>
+                <TableCell align="right">{total()}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
