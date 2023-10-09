@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from '../../axios.js';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchCards } from '../../redux/slices/cards.js';
+import Loading from '../../Components/Loading/Loading.js';
 
 function AddCard(props) {
   const { id } = useParams();
@@ -16,6 +17,9 @@ function AddCard(props) {
   const { cards } = useSelector(state => state.cards);
   console.log(cards)
   const isCardsLoaded = cards.status === 'loaded';
+  
+  // задаю змінну для контролю стану зберігання
+  const [isSaving, setIsSaving] = 'false' 
 
   const dispatch = useDispatch(); 
   const navigate = useNavigate();
@@ -61,6 +65,7 @@ function AddCard(props) {
   // handle Submit and send data to server
   const onSubmit = async (values) => {
     console.log(values);
+    setIsSaving(true);
     const params = {
       title: values.cardName,
       text: values.cardText,
@@ -91,6 +96,8 @@ function AddCard(props) {
       console.warn(err)
     }
   }
+
+  if (isSaving) return <Loading />
 
   return (
     <>
