@@ -113,7 +113,15 @@ const isAuth = useSelector(selectIsAuth);
 						component="div"
 						sx={{ flexGrow: 1 }}
 					>
-						<AddIcon />
+						
+						<Link 
+							component={NavLink}
+							to="addCard"
+							color="inherit"
+						>			
+							<AddIcon />
+						</Link>
+						
 					</Typography>
 
 					<Box>
