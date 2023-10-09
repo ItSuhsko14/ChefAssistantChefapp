@@ -80,7 +80,7 @@ export const router = createHashRouter([
                 path: "/addCard/:id/",
                 element: <AddCard />,
                 errorElement: <ErrorPage />,
-                breadcrumb: "Edit card",
+                breadcrumb: DynamicCardBreadcrumb,
               },
             ],
           },  
