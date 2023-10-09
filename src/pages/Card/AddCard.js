@@ -19,7 +19,7 @@ function AddCard(props) {
   const isCardsLoaded = cards.status === 'loaded';
   
   // задаю змінну для контролю стану зберігання
-  const [isSaving, setIsSaving] = 'false' 
+  const [isSaving, setIsSaving] = useState(false); 
 
   const dispatch = useDispatch(); 
   const navigate = useNavigate();
