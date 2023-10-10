@@ -19,6 +19,7 @@ import Link from '@mui/material/Link';
 import { Link as RouterLink, NavLink } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import MyBreadcrumbs from './MyBreadcrumbs.js';
+import styles from './Header.module.css'
 
 export const mainMenu = [
 							{
@@ -103,7 +104,7 @@ const isAuth = useSelector(selectIsAuth);
 					<Typography 
 						variant="h6" 
 						component="div"
-						sx={{ flexGrow: 1 }}
+						sx={{ marginRight: '16px' }}
 					>
 						Chef assistant
 					</Typography>
@@ -118,8 +119,13 @@ const isAuth = useSelector(selectIsAuth);
 							component={NavLink}
 							to="addCard"
 							color="inherit"
+							className={styles.container}
+							sx={{ textDecoration: 'none', 
+									'&:visited': { color: 'inherit' },
+									'&:hover': { color: '#3c3c3c'}
+								}}
 						>			
-							<AddIcon />
+							New card +
 						</Link>
 						
 					</Typography>
