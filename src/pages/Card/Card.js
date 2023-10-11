@@ -40,7 +40,7 @@ function MyCard(props) {
 
   useEffect( () => {
     axios
-      .get(`cars/${id}`)
+      .get(`cards/${id}`)
       .then( (res) => {
         setCurrentCard(res.data);
         setIsLoading(false);
