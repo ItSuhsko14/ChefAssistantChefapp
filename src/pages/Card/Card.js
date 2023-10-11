@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Ingredient } from './CardItems.js';
+import { SliderCount } from './Slider.js';
 import styles from './card.module.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import TextField from '@mui/material/TextField';
 
 import ClearIcon from '@mui/icons-material/Clear';
 import { useDispatch } from 'react-redux';
@@ -11,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {useParams} from 'react-router-dom';
 import axios from '../../axios.js';
 import Loading from '../../Components/Loading/Loading.js';
+// import {Recalculation} from './Recalculation.js'
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -19,6 +23,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 
 function MyCard(props) {
   const [currentCard, setCurrentCard] = useState({});
@@ -35,7 +40,7 @@ function MyCard(props) {
 
   useEffect( () => {
     axios
-      .get(`cards/${id}`)
+      .get(`cars/${id}`)
       .then( (res) => {
         setCurrentCard(res.data);
         setIsLoading(false);
@@ -68,57 +73,62 @@ function MyCard(props) {
     return sum;
   }
 
-  total();
-
   return (
     <>
-      <Box className={styles.ingredientContainer}>
-        <h1 className={styles.header}>{currentCard.title || 'No Title'}</h1>
-        <p>{currentCard.text}</p>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 300 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell sx={{ width: 50 }} align="right">Mass, g</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {items.map((item) => {
-                return (
-                  <Ingredient 
-                    name={item.name}
-                    amount={item.quantity}
-                  />
-                )
-                })}
-              <TableRow>
-                <TableCell align="right">Total</TableCell>
-                <TableCell align="right">{total()}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        
-        
-        <p>
-          <Button variant="contained"> 
-            <Link to={`/addCard/${id}`}>
-              Edit card   
-            </Link>
-            
-          </Button>          
-          <Button variant="contained" onClick={deleteCard}> 
-              Delete card
-              <ClearIcon />
-          </Button>          
-        </p>
+      <div className={styles.wrapper} >
         <Box className={styles.ingredientContainer}>
+          <h1 className={styles.header}>{currentCard.title || 'No Title'}</h1>
+          <p>{currentCard.text}</p>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 300 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Назва</TableCell>
+                  <TableCell sx={{ width: 50 }} align="right">Вага, г</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {items.map((item) => {
+                  return (
+                    <Ingredient
+                      key={item.name} 
+                      name={item.name}
+                      amount={item.quantity}
+                      recalc='cellll'
+                      
+                    />
+                  )
+                  })}
+                <TableRow>
+                  <TableCell align="right">Total</TableCell>
+                  <TableCell align="right">{total()}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
           
           
-        </ Box>
-      </Box>
-      
+          <p>
+            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+              <Button> 
+                <Link 
+                  to={`/addCard/${id}`}
+                  className={styles.link}
+                >
+                  Редагувати
+                </Link>
+              </Button>          
+
+              <Button onClick={deleteCard}> 
+                  Видалити
+                  <ClearIcon />
+              </Button>
+            </ButtonGroup>          
+          </p>
+          
+        </Box>
+        <SliderCount />
+      </div>
     </>
   );
 }

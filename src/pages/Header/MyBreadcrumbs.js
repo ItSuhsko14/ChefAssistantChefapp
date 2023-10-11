@@ -9,6 +9,7 @@ import { useMatches } from "react-router-dom";
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import styles from './Header.module.css'
 
 export default function MyBreadcrumbs() {
   
@@ -21,33 +22,39 @@ export default function MyBreadcrumbs() {
   console.log(match);
   console.log(breadcrumbs)
 
+  const customBreadcrumb = {
+    '/addCard/:id': 'Edit card',
+    '/Card': 'Card'
+  }
+
   return (
    
   <>
     <Stack spacing={2}>
-        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">  
+        <Breadcrumbs 
+          separator={<NavigateNextIcon fontSize="small" />} 
+          aria-label="breadcrumb"
+          className={styles.breadcrumb}
+        >  
           {breadcrumbs.map(({ match, breadcrumb }, index) => (
+
             <div key={match.pathname}>
               <NavLink key={match.pathname} to={match.pathname} >
                 
-                { breadcrumb.key === '/Card' ? (
-                  <Link
-                    underline="hover"
-                    sx={{ display: 'flex', alignItems: 'center' }}
-                    color="inherit"
-                  >
-                    <DynamicCardBreadcrumb match={match}/> 
-                  </Link>
-                ) : (
-                  <Link
-                    underline="hover"
-                    sx={{ display: 'flex', alignItems: 'center' }}
-                    color="inherit"
-                  >
-                    {breadcrumb}
-                  </Link>
-                )}
-                
+                <Link
+                  underline="hover"
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                  color="inherit"
+                >
+                  {match.pathname === "/addCard/:id111" || match.pathname === "/Card" ? (
+                    <>
+                      <DynamicCardBreadcrumb match={match} />
+                    </>
+                  ) : (
+                    breadcrumb
+                  )}
+                </Link>
+
               </NavLink>
               {index < breadcrumbs.length - 1 && <span></span>}
             </div>

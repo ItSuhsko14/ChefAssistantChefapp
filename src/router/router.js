@@ -33,7 +33,7 @@ export const router = createHashRouter([
                 path: "/",
                 element: <AllCards />,
                 errorElement: <ErrorPage />,
-                breadcrumb: "Home"
+                breadcrumb: "All cards"
               },
               {
                 path: "login",
@@ -80,7 +80,7 @@ export const router = createHashRouter([
                 path: "/addCard/:id/",
                 element: <AddCard />,
                 errorElement: <ErrorPage />,
-                breadcrumb: DynamicCardBreadcrumb,
+                breadcrumb: DynamicCardBreadcrumb
               },
             ],
           },  

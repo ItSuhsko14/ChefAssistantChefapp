@@ -3,3 +3,7 @@
     align-items: center;
     border: 1px;
 }
+
+.breadcrumb {
+    margin: 10px;
+}
