@@ -72,6 +72,7 @@ function MyCard(props) {
     console.log(sum)
     return sum;
   }
+  const totalValue=total();
 
   return (
     <>
@@ -127,7 +128,10 @@ function MyCard(props) {
           </p>
           
         </Box>
-        <SliderCount />
+        <SliderCount 
+          total={totalValue}
+          items={items}
+        />
       </div>
     </>
   );

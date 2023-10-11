@@ -10,7 +10,7 @@ export const SliderCount = (props) => {
     
     const [sliderValue, setSliderValue] = useState(props.total);
     const [sliderStep, setSliderStep] = useState(50)
-    const [maxValue, setMaxValue] = useState(props.total * 20);
+    const [maxValue, setMaxValue] = useState();
 
     const handleSliderChange = (event, newValue) => {
         setSliderValue(newValue);
