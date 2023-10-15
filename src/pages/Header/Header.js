@@ -104,7 +104,10 @@ const isAuth = useSelector(selectIsAuth);
 					<Typography 
 						variant="h6" 
 						component="div"
-						sx={{ marginRight: '16px' }}
+						sx={{ 
+							fontSize: { xs: 14, sm: 20, md: 24, lg: 28 },
+							marginRight: '16px'
+						}}
 					>
 						Chef assistant
 					</Typography>
@@ -120,9 +123,10 @@ const isAuth = useSelector(selectIsAuth);
 							to="addCard"
 							color="inherit"
 							className={styles.container}
-							sx={{ textDecoration: 'none', 
-									'&:visited': { color: 'inherit' },
-									'&:hover': { color: '#3c3c3c'}
+							sx={{ 	fontSize: { xs: 14, sm: 20, md: 24, lg: 28 },
+									textDecoration: 'none', 
+										'&:visited': { color: 'inherit' },
+										'&:hover': { color: '#3c3c3c'}
 								}}
 						>			
 							New card +
