@@ -15,13 +15,17 @@ const initialState = {
 	cards: {
 		items: [],
 		status: 'loading',
-	}
+	},
+	total: 0,
 }
 
-const cardsSlice = createSlice({
+export const cardsSlice = createSlice({
 	name: 'cards',
 	initialState,
-	reducer: {
+	reducers: {
+		updateTotal(state, action) {
+			state.total = action.payload;
+		  },
 		// addItems: (state, action) => {
 		// 	const items = 
 		// }
@@ -48,5 +52,8 @@ const cardsSlice = createSlice({
 		
 	}
 })
+
+
+
 
 export const cardReducer = cardsSlice.reducer;

@@ -8,13 +8,14 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import TextField from '@mui/material/TextField';
 
 import ClearIcon from '@mui/icons-material/Clear';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchRemoveCard, fetchCards } from '../../redux/slices/cards.js';
 import { Link, useNavigate } from "react-router-dom";
 import {useParams} from 'react-router-dom';
 import axios from '../../axios.js';
 import Loading from '../../Components/Loading/Loading.js';
-// import {Recalculation} from './Recalculation.js'
+import { cardsSlice } from '../../redux/slices/cards';
+
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -26,53 +27,73 @@ import Paper from '@mui/material/Paper';
 
 
 function MyCard(props) {
-  const [currentCard, setCurrentCard] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  console.log(isLoading);
+  const [currentCard, setCurrentCard] = useState({}); // data of current card
+  const [isLoading, setIsLoading] = useState(true); // state for process of loading data from backend
+  
   const { id } = useParams();
   const param = useParams();
   console.log(param)
   console.log(id)
   const cardId = id;
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  
 
+  const navigate = useNavigate(); 
+
+  const dispatch = useDispatch();
+
+  const {updateTotal} = cardsSlice.actions
+
+  // we get data from Redux state
+  
+  const state = useSelector(state => state.cards);
+  let totalValue;
+  totalValue = state.total;
+  console.log(totalValue)
+  
+  // calculation of the amount of ingredients
+  const total = (items) => {
+  const sum = items.reduce( (acc, item) => {
+    return acc + item.quantity
+  }, 0)
+  console.log(sum)
+  return sum;
+  }
+
+  // receiving data from backend
   useEffect( () => {
     axios
       .get(`cards/${id}`)
       .then( (res) => {
         setCurrentCard(res.data);
         setIsLoading(false);
+        
+        
       })
+      .then(() => {
+        console.log(currentCard.items)
+        totalValue=total(currentCard.items)
+        dispatch(updateTotal(totalValue))
+        console.log(totalValue)
+      }
+        
+      )
+      
       .catch( (err) => {
         console.warn(err);
         alert('Помилка при отриманні статті')
       });
-  }, [id])
+    
+    
+  }, [])
 
-  if (isLoading) return <Loading />
-  
-  console.log(currentCard);
-  const items = currentCard.items;
-  
-  console.log(items);
-  console.log(id);
-  
+  if (!isLoading) {console.log(currentCard.items)}
+
   const deleteCard = async () => {
       console.log(id);
       dispatch(fetchRemoveCard(id));
       navigate('/getAll')
     }
 
-  const total = () => {
-    const sum = items.reduce( (acc, item) => {
-      return acc + item.quantity
-    }, 0)
-    console.log(sum)
-    return sum;
-  }
-  const totalValue=total();
+  if (isLoading) return <Loading />
 
   return (
     <>
@@ -89,7 +110,7 @@ function MyCard(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {items.map((item) => {
+                {currentCard.items.map((item) => {
                   return (
                     <Ingredient
                       key={item.name} 
@@ -102,7 +123,7 @@ function MyCard(props) {
                   })}
                 <TableRow>
                   <TableCell align="right">Total</TableCell>
-                  <TableCell align="right">{total()}</TableCell>
+                  <TableCell align="right">{totalValue}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -129,8 +150,7 @@ function MyCard(props) {
           
         </Box>
         <SliderCount 
-          total={totalValue}
-          items={items}
+          
         />
       </div>
     </>
