@@ -23,6 +23,15 @@ export const cardsSlice = createSlice({
 	name: 'cards',
 	initialState,
 	reducers: {
+		updateCard: (state, action) => {
+			const updatedCard = action.payload; // Припустимо, в action.payload міститься оновлена інформація про картку
+			// Знайдіть індекс картки, яку потрібно оновити в стані
+			const cardIndex = state.cards.items.findIndex((card) => card._id === updatedCard._id);
+			if (cardIndex !== -1) {
+			  // Оновіть дані картки
+			  state.cards.items[cardIndex] = updatedCard;
+			}
+		  },
 		updateTotal(state, action) {
 			state.total = action.payload;
 		  },

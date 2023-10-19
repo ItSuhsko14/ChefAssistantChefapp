@@ -73,11 +73,11 @@ export const SliderCount = () => {
                 break;
             }
 
-        console.log('maxValue')
-        console.log(maxValue)
+        // console.log('maxValue')
+        // console.log(maxValue)
         
-        console.log('sliderStep')
-        console.log(sliderStep)
+        // console.log('sliderStep')
+        // console.log(sliderStep)
       }, [sliderValue, maxValue]);
       
        useEffect(() => {
