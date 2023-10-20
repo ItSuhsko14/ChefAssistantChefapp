@@ -75,7 +75,7 @@ const isAuth = useSelector(selectIsAuth);
 	return ( 
 	    
 		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position="sticky" >
+			<AppBar position="fixed" >
 				<Toolbar>
 					<div>
 						<Button onClick={toggleDrawer(true)}>
@@ -142,7 +142,10 @@ const isAuth = useSelector(selectIsAuth);
 					</Box>
 				</Toolbar>
 			</AppBar>
-			<MyBreadcrumbs />
+			{/* <MyBreadcrumbs 
+				sx={{ marginTop: 10 }}
+				className={styles.breadrumb}
+			/> */}
 		</Box>
 	)
 }

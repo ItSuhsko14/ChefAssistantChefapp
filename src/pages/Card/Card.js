@@ -108,15 +108,16 @@
     return (
       <>
         <div className={styles.wrapper} >
-          <Box className={styles.ingredientContainer}>
+          <div className={styles.ingredientContainer} >
+          <Box >
             <h1 className={styles.header}>{currentCard.title || 'No Title'}</h1>
             <p>{currentCard.text}</p>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 300 }} aria-label="simple table">
+              <Table sx={{ }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Назва</TableCell>
-                    <TableCell sx={{ width: 50 }} align="right">Вага, г</TableCell>
+                    <TableCell sx={{  }} align="right">Вага, г</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -156,12 +157,13 @@
                     <ClearIcon />
                 </Button>
               </ButtonGroup>          
+            
             </div>
-            
           </Box>
-          <SliderCount 
-            
-          />
+          </div>  
+          <div className={styles.sliderContainer} >
+            <SliderCount />
+          </div>
         </div>
       </>
     );
