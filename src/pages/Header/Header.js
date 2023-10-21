@@ -142,10 +142,10 @@ const isAuth = useSelector(selectIsAuth);
 					</Box>
 				</Toolbar>
 			</AppBar>
-			{/* <MyBreadcrumbs 
+			<MyBreadcrumbs 
 				sx={{ marginTop: 10 }}
 				className={styles.breadrumb}
-			/> */}
+			/>
 		</Box>
 	)
 }
