@@ -4,13 +4,16 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import axios from '../../axios.js';
 import { useDispatch } from 'react-redux';
 import { fetchRemoveCard } from '../../redux/slices/cards.js';
 import { Link as RouterLink } from "react-router-dom";
-import styles from './allCards.css'
+import styles from './allCards.css';    
+
+import LaunchIcon from '@mui/icons-material/Launch';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const CardPreview = (props) => {
     
@@ -36,7 +39,20 @@ return (
                 <Link 
                     component={RouterLink} 
                     to={`/Card/${props.link}`} 
-
+                    sx={{
+                        
+                        color: "inherit", // Звичайний колір
+                        "&:hover": {
+                          color: "red" // Колір при наведенні мишки
+                        },
+                        "&:active": {
+                          color: "green" // Колір при натисканні
+                        },
+                        "&:visited": {
+                          color: "inherit" // Колір відвіданого посилання
+                        },
+                        textDecoration: "none"
+                      }}
                 >
                     <Typography 
                         variant="h5"
@@ -46,13 +62,23 @@ return (
                     </Typography>
                 </Link>
             </CardContent>
-            <CardActions> 
+            <CardActions
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "80%",
+                    
+                }}
+            > 
                 <Link component={RouterLink} to={`/Card/${props.link}`} >
-                    Відкрити картку
+                    <LaunchIcon />
                 </Link>
-                <Button onClick={deleteCard}>
+                <Link component={RouterLink} to={`/addCard/${props.cardId}`} >
+                    <EditIcon />
+                </Link>
+                <Link onClick={deleteCard}>
                     <DeleteIcon />
-                </Button>
+                </Link>
             </CardActions>
         </Card> 
     </>    
