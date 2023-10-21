@@ -27,10 +27,10 @@ function GaetAll() {
             <Grid container spacing={2}>
               
               {cards.items.map( item => (
-                  <Grid xs={4}>    
+                  <Grid xs={6} sm={4} md={3} lg={2} xl={2}>    
                     <CardPreview 
                       name={item.title} 
-                      text={item.text} 
+                      // text={item.text} 
                       link={item._id} 
                       cardId={item._id} 
                     />

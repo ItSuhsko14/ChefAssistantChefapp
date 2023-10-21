@@ -10,6 +10,7 @@ import axios from '../../axios.js';
 import { useDispatch } from 'react-redux';
 import { fetchRemoveCard } from '../../redux/slices/cards.js';
 import { Link as RouterLink } from "react-router-dom";
+import styles from './allCards.css'
 
 export const CardPreview = (props) => {
     
@@ -23,14 +24,27 @@ export const CardPreview = (props) => {
 
 return (
     <>
-        <Card>  
+        <Card
+            sx={{ 
+                padding: "3px",
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+            }}
+        >  
             <CardContent> 
-                <Typography variant="h5">
-                    {props.name}
-                </Typography>
-                <Typography variant="h6">
-                    {props.text}
-                </Typography>
+                <Link 
+                    component={RouterLink} 
+                    to={`/Card/${props.link}`} 
+
+                >
+                    <Typography 
+                        variant="h5"
+                        sx={{ fontSize: { xs: "1.2rem", sm: "1.4rem", md: "2rem" } }}
+                    >
+                        {props.name}
+                    </Typography>
+                </Link>
             </CardContent>
             <CardActions> 
                 <Link component={RouterLink} to={`/Card/${props.link}`} >
