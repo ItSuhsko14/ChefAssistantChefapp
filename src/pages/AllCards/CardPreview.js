@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
+import ConfirmDialog from './../../Components/ConfirmDialogs/ConfirmDialog'
 import axios from '../../axios.js';
 import { useDispatch } from 'react-redux';
 import { fetchRemoveCard } from '../../redux/slices/cards.js';
@@ -16,13 +17,20 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export const CardPreview = (props) => {
-    
+
+    const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
+
     const dispatch = useDispatch();
     const cardId = props.cardId;
     
+    const openConfirmDialog = () => {
+        setConfirmDialogOpen(true);
+    };
+
     const deleteCard = async () => {
-    dispatch(fetchRemoveCard(cardId));
-    console.log(props.cardId)
+        setConfirmDialogOpen(false);
+        dispatch(fetchRemoveCard(cardId));
+        console.log(props.cardId)
     }
 
 return (
@@ -76,10 +84,16 @@ return (
                 <Link component={RouterLink} to={`/addCard/${props.cardId}`} >
                     <EditIcon />
                 </Link>
-                <Link onClick={deleteCard}>
+                <Link onClick={openConfirmDialog}>
                     <DeleteIcon />
                 </Link>
             </CardActions>
         </Card> 
+
+        <ConfirmDialog
+            open={isConfirmDialogOpen}
+            onClose={() => setConfirmDialogOpen(false)}
+            onConfirm={deleteCard}
+        />
     </>    
     )}
