@@ -15,6 +15,7 @@
   import {useParams} from 'react-router-dom';
   import axios from '../../axios.js';
   import Loading from '../../Components/Loading/Loading.js';
+  import ConfirmDialog from '../../Components/ConfirmDialogs/ConfirmDialog.js';
   import { cardsSlice } from '../../redux/slices/cards';
 
 
@@ -31,6 +32,8 @@
     const [currentCard, setCurrentCard] = useState({}); // data of current card
     const [isLoading, setIsLoading] = useState(true); // state for process of loading data from backend
     const [coefficient, setCoefficient] = useState({});
+    const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
+
     
     const { id } = useParams();
     console.log(id)
@@ -48,6 +51,10 @@
     console.log('totalValueFromState')
     console.log(totalValue)
     
+    const openConfirmDialog = () => {
+      setConfirmDialogOpen(true);
+    };
+
     // calculation of the amount of ingredients
     const total = (items) => {
       if (!items) {
@@ -98,7 +105,7 @@
     }, [totalValue] )
 
     const deleteCard = async () => {
-        console.log(id);
+        setConfirmDialogOpen(false);
         dispatch(fetchRemoveCard(id));
         navigate('/getAll')
       }
@@ -152,7 +159,7 @@
                   </Link>
                 </Button>          
 
-                <Button onClick={deleteCard}> 
+                <Button onClick={openConfirmDialog}> 
                     Видалити
                     <ClearIcon />
                 </Button>
@@ -165,6 +172,12 @@
             <SliderCount />
           </div>
         </div>
+
+        <ConfirmDialog
+            open={isConfirmDialogOpen}
+            onClose={() => setConfirmDialogOpen(false)}
+            onConfirm={deleteCard}
+        />
       </>
     );
   }
