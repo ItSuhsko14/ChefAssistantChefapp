@@ -34,19 +34,35 @@ export const IngredientInput = (props) => {
 	const removeItem = props.removeItem;
 	return (
 		<>
-			<Grid container key={props.index} spacing={0} className={styles.ingredient} >
-                <Grid xs={6}>
-            		<TextField {...register(`items.${props.index}.name`)}  variant="outlined" type="text" />
+			<Grid container 
+				key={props.index} 
+				rowSpacing={1} 
+				columnSpacing={1}
+				className={styles.ingredient} 
+			>
+				
+                <Grid item xs={7}>
+            		<TextField 
+						{...register(`items.${props.index}.name`)}  
+						variant="outlined" 
+						type="text" 
+					/>
                 </Grid>
-                <Grid xs={3}>
-                	<TextField {...register(`items.${props.index}.quantity`)} variant="outlined" type="number" />
+                <Grid item xs={3}>
+                	<TextField 
+						{...register(`items.${props.index}.quantity`)} 
+						variant="outlined" 
+						type="number" 
+					/>
                 </Grid>
-                <Grid item xs={3}> 
-                    <div className={styles.buttonContainer}>
-                    	<Button onClick={props.removeItem} variant="contained">
-                        	<ClearIcon />
-                    	</Button>
-                    </div>
+                <Grid item xs={2} > 
+					<Button 
+						className={styles.buttonContainer}
+						onClick={props.removeItem} 
+						variant="contained"
+					>
+						<ClearIcon />
+					</Button>
                 </Grid>
             </Grid>
 		</>

@@ -30,13 +30,12 @@
 }
 
 .ingredient {
-	padding: 1%;
+	padding: 0%;
 	width: 100%;
 	margin: 0;
 	align-items: center;
-	background-color: #F2EBEB;
+	
 	border-radius: 4px;
-	border: 1px solid grey;	
 }
 
 .addIngredient {
@@ -54,13 +53,14 @@
 
 .container {
 	width: 100%;
-	background: grey;
 	margin-top: 0px;
 	padding: 10px;
 	font-family: roboto;
 	/* margin-left:0;
 	margin-right: auto; */
 	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
 }
 
 .header {
