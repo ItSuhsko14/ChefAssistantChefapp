@@ -34,7 +34,7 @@ export const IngredientInput = (props) => {
 	const removeItem = props.removeItem;
 	return (
 		<>
-			<Grid container key={props.index} spacing={1} className={styles.ingredient} >
+			<Grid container key={props.index} spacing={0} className={styles.ingredient} >
                 <Grid xs={6}>
             		<TextField {...register(`items.${props.index}.name`)}  variant="outlined" type="text" />
                 </Grid>

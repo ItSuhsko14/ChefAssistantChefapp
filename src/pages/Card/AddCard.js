@@ -104,7 +104,7 @@ function AddCard(props) {
       <Box className={styles.container}>
         <form onSubmit={handleSubmit(onSubmit)}>  
           <Box className={styles.ingredientContainer}>
-            <h1 className={styles.header}>
+            <div className={styles.header}>
               <TextField 
                 onClick={onChange}
                 className={styles.cardNameInput} 
@@ -114,35 +114,35 @@ function AddCard(props) {
                 helperText={errors.cardName?.message}
                 {...register("cardName", { required: ""})}
               />
-            </h1>
-            <p>
+            </div>
+            <div className={styles.header}>
               <TextField 
                 className={styles.cardNameInput} 
                 label="Card text" 
                 variant="outlined" 
                 error={Boolean(errors.cardText?.message)}
                 helperText={errors.cardText?.message}
-                {...register("cardText", { required: "sdfgseg"})}
+                {...register("cardText", { required: ""})}
+                sx={{
+                  margin: 0, // Позбавити від відступів
+                }}
               />
-            </p>
-            <p>
+            </div>
+            <div>
                 {fields.map((item, index) => (
-                  <p key={item.id}>
+                  <div key={item.id}>
                     <IngredientInput 
                       register={register}
                       removeItem={ () => {remove(index)}}
                       index={index}
                     />
-                    {/* <input {...register(`items.${index}.name`)} />
-                    <input {...register(`items.${index}.amount`)} />
-                    <button type="button" onClick={ () => {remove(index)}}> x </button> */}
-                  </p>
+                  </div>
                 ))}
               <AddIngredient 
-                click={() => append({ name: "", quantity: 0 })}
+                click={() => append({ name: "", quantity: "" })}
               />
               <SaveButton variant="contained" type="submit" onClick={onSubmit}/> 
-            </p>
+            </div>
           </ Box>
         </form>
       </Box>
