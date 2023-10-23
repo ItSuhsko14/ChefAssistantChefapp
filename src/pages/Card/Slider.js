@@ -9,8 +9,6 @@ import { cardReducer } from '../../redux/slices/cards';
 import { cardsSlice } from '../../redux/slices/cards';
 import { useSelector } from 'react-redux';
 
-
-
 export const SliderCount = () => {
     
     const [sliderValue, setSliderValue] = useState(0); 
