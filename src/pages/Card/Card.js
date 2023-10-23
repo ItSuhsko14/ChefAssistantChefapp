@@ -17,7 +17,7 @@
   import Loading from '../../Components/Loading/Loading.js';
   import ConfirmDialog from '../../Components/ConfirmDialogs/ConfirmDialog.js';
   import { cardsSlice } from '../../redux/slices/cards';
-
+  import requestWakeLock from '../../utils/wakeLock.js'
 
   import Table from '@mui/material/Table';
   import TableBody from '@mui/material/TableBody';
@@ -66,6 +66,11 @@
       console.log(sum)
       return sum;
     }
+
+    useEffect( () => {
+       requestWakeLock()
+      }, []
+    )
 
     // receiving data from backend
     useEffect( () => {
