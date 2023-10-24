@@ -1,5 +1,3 @@
-
-
 export const recalculation = (items, total) => {
     console.log('Recalculation')
     console.log(items)
