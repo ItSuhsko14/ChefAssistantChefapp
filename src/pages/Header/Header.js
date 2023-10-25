@@ -30,6 +30,10 @@ export const mainMenu = [
 								text:'Створити нову картку',
 								link:'addCard'
 							},
+							{
+								text:'Про додаток',
+								link:'AboutUs'
+							},
 						];
 export const burgerMenu = [...mainMenu];
 

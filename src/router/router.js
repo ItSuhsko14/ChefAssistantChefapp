@@ -8,6 +8,7 @@ import Navbar from '../pages/Navbar/Navbar.js'
 import Card from '../pages/Card/Card.js';
 import AddCard from '../pages/Card/AddCard.js';
 import Root from './root.jsx'
+import AboutUs from './../pages/AboutUs/AboutUs.js'
 import { DynamicCardBreadcrumb } from '../router/DynamicCardBreadcrumb.js'
 import { Outlet } from "react-router-dom";
 
@@ -81,6 +82,12 @@ export const router = createHashRouter([
                 element: <AddCard />,
                 errorElement: <ErrorPage />,
                 breadcrumb: DynamicCardBreadcrumb
+              },
+              {
+                path: "/AboutUs",
+                element: <AboutUs />,
+                errorElement: <ErrorPage />,
+                breadcrumb: "Про додаток"
               },
             ],
           },  
