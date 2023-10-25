@@ -23,11 +23,11 @@ import styles from './Header.module.css'
 
 export const mainMenu = [
 							{
-								text:'All cards',
+								text:'Всі картки',
 								link:'/'
 							},
 							{
-								text:'Create new card',
+								text:'Створити нову картку',
 								link:'addCard'
 							},
 						];
@@ -129,7 +129,7 @@ const isAuth = useSelector(selectIsAuth);
 										'&:hover': { color: '#3c3c3c'}
 								}}
 						>			
-							New card +
+							Нова картка
 						</Link>
 						
 					</Typography>

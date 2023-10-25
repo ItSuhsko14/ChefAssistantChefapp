@@ -33,25 +33,25 @@ export const router = createHashRouter([
                 path: "/",
                 element: <AllCards />,
                 errorElement: <ErrorPage />,
-                breadcrumb: "All cards"
+                breadcrumb: "Всі картки"
               },
               {
                 path: "login",
                 element: <Login />,
                 errorElement: <ErrorPage />,
-                breadcrumb: "Login"
+                breadcrumb: "Логін"
               },
               {
                 path: "/getAll",
                 element: <AllCards />,
                 errorElement: <ErrorPage />,
-                breadcrumb: "All cards"
+                breadcrumb: "Всі картки"
               },
               {
                 path: "/registration",
                 element: <Registration />,
                 errorElement: <ErrorPage />,
-                breadcrumb: "Registration"
+                breadcrumb: "Реєстрація"
               },
               {
                 path: "navbar",
@@ -74,7 +74,7 @@ export const router = createHashRouter([
                 path: "addCard",
                 element: <AddCard />,
                 errorElement: <ErrorPage />,
-                breadcrumb: "Add card"
+                breadcrumb: "Створення картки"
               },
               {
                 path: "/addCard/:id/",

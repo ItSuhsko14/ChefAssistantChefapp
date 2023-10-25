@@ -23,8 +23,8 @@ export default function MyBreadcrumbs() {
   console.log(breadcrumbs)
 
   const customBreadcrumb = {
-    '/addCard/:id': 'Edit card',
-    '/Card': 'Card'
+    '/addCard/:id': 'Редагування картки',
+    '/Card': 'Картка'
   }
 
   return (
