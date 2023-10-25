@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Chef assistant",
+  "name": "Chef assistant",
   "icons": [
     {
       "src": "favicon.ico",
