@@ -6,8 +6,8 @@ import { CardPreview } from './CardPreview.js';
 import { fetchCards } from '../../redux/slices/cards.js';
 import Loading from '../../Components/Loading/Loading.js';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { touchScreen } from 'react-beautiful-dnd';
-
+import { DndProvider } from 'react-dnd'; // Замініть імпорт
+import { TouchBackend } from 'react-dnd-touch-backend'; // Додайте імпорт для сенсорних екранів
 
 import { cardsSlice } from '../../redux/slices/cards.js';
 
@@ -23,10 +23,6 @@ function GaetAll() {
   useEffect(() => {
     dispatch(fetchCards())
   }, [])
-
-  useEffect(() => {
-    touchScreen();
-  }, []);
 
   const {updateCards} = cardsSlice.actions
 
@@ -52,6 +48,7 @@ function GaetAll() {
           <Container
             sx={{ marginTop: "20px"}}
           >
+            <DndProvider backend={TouchBackend}>
             <DragDropContext onDragEnd={handleDragEnd}>
               <Droppable droppableId="card-list">
                 {(provided) => (
@@ -79,6 +76,7 @@ function GaetAll() {
                 )}
               </Droppable>
             </DragDropContext>
+            </DndProvider>
           </Container>
         </>
       )
