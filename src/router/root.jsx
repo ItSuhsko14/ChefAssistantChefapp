@@ -1,5 +1,6 @@
 import { Header } from '../pages/Header/Header.js';
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
+import { Footer } from '../pages/Footer/Footer.js'
 
 
 export default function Root() {
@@ -7,6 +8,7 @@ export default function Root() {
     <>
       <Header />
       <Outlet />
+      <Footer />
     </>
   )
 }

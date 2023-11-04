@@ -1,9 +1,31 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../../axios.js'
+import { pouchDB } from '../../pouchDB/pouch.js'
 
+export const loadDataFromPouchDB = createAsyncThunk('cards/loadDataFromPouchDB', async () => {
+	console.log("LoadDataFromPouchDB")
+	try {
+	  // Здійснюємо завантаження даних з PouchDB
+	  const response = await pouchDB.get('pouchstate');
+  
+	  // Отримані дані з PouchDB
+	  const pouchDBData = response.data; // Дані були збережені як поле "data" у об'єкті
+	  console.log(pouchDBData);
+  
+	  // Повертаємо отримані дані з PouchDB
+	  return pouchDBData;
+	} catch (error) {
+	  // Обробка помилок, якщо завантаження не вдалося
+	  console.error('Помилка завантаження даних з PouchDB:', error);
+	  throw error; // Ви можете кинути помилку, якщо необхідно
+	}
+  });
+  
 export const fetchCards = createAsyncThunk('cards/FetchCards', async () => {
 	const { data } = await axios.get('/cards')	
+	console.log("Данні з бекенда завантажені в стейт")
+	console.log(data)
 	return data;
 })
 
@@ -38,11 +60,13 @@ export const cardsSlice = createSlice({
 		updateTotal(state, action) {
 			state.total = action.payload;
 		  },
-		// addItems: (state, action) => {
-		// 	const items = 
-		// }
 	},
 	extraReducers: {
+		[loadDataFromPouchDB.fulfilled]: (state, action) => {
+			// Оновлення поля pouchDBData з отриманими даними з PouchDB
+			console.log(action.payload)
+			state.cards.items = action.payload;
+		  },
 		// додавання карток
 		[fetchCards.pending]: (state, action) => {
 			state.cards.items = [];
@@ -50,6 +74,7 @@ export const cardsSlice = createSlice({
 		},
 		[fetchCards.fulfilled]: (state, action) => {
 			state.cards.items = action.payload;
+			console.log(action.payload)
 			state.cards.status = 'loaded';
 		},
 		[fetchCards]: (state) => {
@@ -64,8 +89,5 @@ export const cardsSlice = createSlice({
 		
 	}
 })
-
-
-
 
 export const cardReducer = cardsSlice.reducer;

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -8,20 +8,28 @@ import Loading from '../../Components/Loading/Loading.js';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { DndProvider } from 'react-dnd'; // Замініть імпорт
 import { TouchBackend } from 'react-dnd-touch-backend'; // Додайте імпорт для сенсорних екранів
-
 import { cardsSlice } from '../../redux/slices/cards.js';
+import { loadDataFromPouchDB } from '../../redux/slices/cards.js';
 
 function GaetAll() {
   
+  console.log('Всі картки почались')
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const { cards } = useSelector(state => state.cards);
-  console.log(cards);
-  const isCardsLoading = cards.status === 'loading';
-  console.log(isCardsLoading);
-  console.log(cards)
+  
+  console.log("Card status");
+  console.log(cards.status);
+
+  useEffect(() => {
+    console.log("Данні з PouchDB заванатажуємо до стейту")
+    dispatch(loadDataFromPouchDB());
+    setIsLoading(false);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchCards())
+    setIsLoading(false);
   }, [])
 
   const {updateCards} = cardsSlice.actions
@@ -41,7 +49,7 @@ function GaetAll() {
     dispatch(updateCards(updatedCardsItems));
   };
 
-  if (isCardsLoading) return <Loading />
+  if (isLoading) return <Loading />
 
       return (
         <>

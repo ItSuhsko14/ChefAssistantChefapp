@@ -18,23 +18,18 @@
   import ConfirmDialog from '../../Components/ConfirmDialogs/ConfirmDialog.js';
   import { cardsSlice } from '../../redux/slices/cards';
   import requestWakeLock from '../../utils/wakeLock.js'
-
-  import Table from '@mui/material/Table';
-  import TableBody from '@mui/material/TableBody';
-  import TableCell from '@mui/material/TableCell';
-  import TableContainer from '@mui/material/TableContainer';
-  import TableHead from '@mui/material/TableHead';
-  import TableRow from '@mui/material/TableRow';
-  import Paper from '@mui/material/Paper';
-
+  import CardPreview from './CardPreview.js'
+  import { loadDataFromPouchDB } from '../../redux/slices/cards.js';
 
   function MyCard(props) {
     const [currentCard, setCurrentCard] = useState({}); // data of current card
     const [isLoading, setIsLoading] = useState(true); // state for process of loading data from backend
     const [coefficient, setCoefficient] = useState({});
     const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
+    const { cards } = useSelector(state => state.cards);
+    console.log(cards.items);
+    // setCurrentCard(cards)
 
-    
     const { id } = useParams();
     console.log(id)
 
@@ -42,6 +37,12 @@
     const dispatch = useDispatch();
     const {updateTotal, updateCard} = cardsSlice.actions
     
+    useEffect(() => {
+      console.log(cards)
+      let currentItem = cards.items.find( item => item._id == id)
+      console.log(currentItem);
+      setCurrentCard(currentItem)
+    }, [cards])
 
     // we get data from Redux state
     const state = useSelector(state => state.cards);
@@ -51,6 +52,12 @@
     console.log('totalValueFromState')
     console.log(totalValue)
     
+    useEffect(() => {
+      console.log("Данні з PouchDB заванатажуємо до стейту")
+      dispatch(loadDataFromPouchDB());
+      setIsLoading(false);
+    }, [dispatch]);
+
     const openConfirmDialog = () => {
       setConfirmDialogOpen(true);
     };
@@ -78,15 +85,10 @@
         .get(`cards/${id}`)
         .then( (res) => {
           setCurrentCard(res.data);
-          console.log(currentCard)
           setIsLoading(false);
-          console.log('currentCard was download')
           const totalValue = total(res.data.items);
           setCoefficient(recalculation(res.data.items, totalValue));
           dispatch(updateTotal(totalValue));
-          console.log(totalValue);
-          console.log(coefficient);
-          
         })
         .catch( (err) => {
           console.warn(err);
@@ -96,8 +98,8 @@
 
     if (!isLoading) {console.log(currentCard)}
 
+    // recalculation card values from totalValue
     useEffect( () => {
-      console.log(coefficient)
       if (totalValue > 0 && currentCard && currentCard.items && coefficient) {
         let card = makeNewCard(currentCard.items, totalValue, coefficient)
         console.log(card);
@@ -115,68 +117,18 @@
         navigate('/getAll')
       }
 
-    if (isLoading) return <Loading />
-
     return (
       <>
-        <div className={styles.wrapper} >
-          <div className={styles.ingredientContainer} >
-          <Box >
-            <h1 className={styles.header}>{currentCard.title || 'No Title'}</h1>
-            <p>{currentCard.text}</p>
-            <TableContainer component={Paper}>
-              <Table sx={{ }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Назва</TableCell>
-                    <TableCell sx={{  }} align="right">Вага, г</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {currentCard.items.map((item) => {
-                    return (
-                      <Ingredient
-                        key={item.name} 
-                        name={item.name}
-                        amount={item.quantity}
-                        recalc='cellll'
-                        
-                      />
-                    )
-                    })}
-                  <TableRow>
-                    <TableCell align="right">Всього</TableCell>
-                    <TableCell align="right">{totalValue}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            
-            
-            <div>
-              <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                <Button> 
-                  <Link 
-                    to={`/addCard/${id}`}
-                    className={styles.link}
-                  >
-                    Редагувати
-                  </Link>
-                </Button>          
-
-                <Button onClick={openConfirmDialog}> 
-                    Видалити
-                    <ClearIcon />
-                </Button>
-              </ButtonGroup>          
-            
-            </div>
-          </Box>
-          </div>  
-          <div className={styles.sliderContainer} >
-            <SliderCount />
-          </div>
-        </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <CardPreview
+            currentCard={currentCard}
+            totalValue={totalValue}
+            openConfirmDialog={openConfirmDialog}
+            id={id}
+          />
+        )}
 
         <ConfirmDialog
             open={isConfirmDialogOpen}

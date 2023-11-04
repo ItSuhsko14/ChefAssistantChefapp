@@ -4,7 +4,6 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import Button from '@mui/material/Button';
 import ConfirmDialog from './../../Components/ConfirmDialogs/ConfirmDialog'
 import axios from '../../axios.js';
 import { useDispatch } from 'react-redux';
@@ -30,7 +29,7 @@ export const CardPreview = (props) => {
     const deleteCard = async () => {
         setConfirmDialogOpen(false);
         dispatch(fetchRemoveCard(cardId));
-        console.log(props.cardId)
+        
     }
 
 return (

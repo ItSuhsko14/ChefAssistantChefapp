@@ -16,11 +16,8 @@ export default function MyBreadcrumbs() {
   const CustomPropsBreadcrumb = ({ someProp }) => <span>{someProp}</span>;
 
   const { cards } = useSelector(state => state.cards);
-  console.log(cards);
   const breadcrumbs = useBreadcrumbs(router.routes, { excludePaths: ["/Card/:id"] });
   let match = useMatches();
-  console.log(match);
-  console.log(breadcrumbs)
 
   const customBreadcrumb = {
     '/addCard/:id': 'Редагування картки',
@@ -62,15 +59,5 @@ export default function MyBreadcrumbs() {
         </Breadcrumbs>
     </Stack>
   </>
-
-    // <div role="presentation" onClick={handleClick}>
-    //   <Breadcrumbs aria-label="breadcrumb">
-    //     <Link underline="hover" color="inherit" href="/">
-    //       Головна
-    //     </Link>
-        
-    //     <Typography color="text.primary">Хліб</Typography>
-    //   </Breadcrumbs>
-    // </div>
   );
 }

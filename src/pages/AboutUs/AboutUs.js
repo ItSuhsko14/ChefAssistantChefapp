@@ -26,12 +26,14 @@ function AboutUs() {
                     </ul>
                 </p>
                 <p>
-                    Звороній зв'язок, вдячність, пропозиції - itSushkoAndriy@gmail.com
+                    Звороній зв'язок, вдячність, пропозиції - 
+                    <a href="mailto:itsuhskoandriy@gmail.com">itSushkoAndriy@gmail.com</a> 
                 </p>
                 <p>
                     Додаток розроблено на стеку MERN (MongoDb, Express.js, React.js, Node.js).
                 </p>
             </article>
+            
         </>
     );
 }

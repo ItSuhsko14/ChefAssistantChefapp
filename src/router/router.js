@@ -11,15 +11,12 @@ import Root from './root.jsx'
 import AboutUs from './../pages/AboutUs/AboutUs.js'
 import { DynamicCardBreadcrumb } from '../router/DynamicCardBreadcrumb.js'
 import { Outlet } from "react-router-dom";
+import DataLoader from './DataLoader.js'
 
 const basenameURL = process.env.PUBLIC_URL;
 
 export const router = createHashRouter([
-  // {
-  //   path: "/",
-  //   basename: "/ChefAssistantChefapp",
-  //   element: <div>Hello world!</div>,
-  // },
+ 
       {
         path: "/",
         basename: "/ChefAssistantChefapp",
@@ -27,7 +24,11 @@ export const router = createHashRouter([
         children: [
           {
             path: '/',
-            element: <Outlet />,
+            element: (
+              <DataLoader>
+                <Outlet />
+              </DataLoader>
+            ),
             breadcrumb: 'Home',
             children: [
               {

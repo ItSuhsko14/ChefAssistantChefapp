@@ -42,8 +42,6 @@ export const Header = (props) => {
 const isAuth = useSelector(selectIsAuth);
 
 	const [state, setState] = React.useState(false);
-	console.log("state");
-	console.log(state);
 
 	const anchor = "left";
 
@@ -104,7 +102,6 @@ const isAuth = useSelector(selectIsAuth);
 						</Drawer>
 				    </div>
 					
-					
 					<Typography 
 						variant="h6" 
 						component="div"
@@ -113,7 +110,19 @@ const isAuth = useSelector(selectIsAuth);
 							marginRight: '16px'
 						}}
 					>
-						Chef assistant
+						<Link 
+							component={NavLink}
+							to="/"
+							color="inherit"
+							className={styles.container}
+							sx={{ 	fontSize: { xs: 14, sm: 20, md: 24, lg: 28 },
+									textDecoration: 'none', 
+										'&:visited': { color: 'inherit' },
+										'&:hover': { color: '#3c3c3c'}
+								}}
+						>			
+							Chef assistant
+						</Link>
 					</Typography>
 
 					<Typography 
