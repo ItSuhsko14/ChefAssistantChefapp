@@ -1,3 +1,4 @@
+// Calculation coefficients for each engredient
 export const recalculation = (items, total) => {
     console.log('Recalculation')
     console.log(items)

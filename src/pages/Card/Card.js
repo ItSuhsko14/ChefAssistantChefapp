@@ -26,37 +26,41 @@
     const [isLoading, setIsLoading] = useState(true); // state for process of loading data from backend
     const [coefficient, setCoefficient] = useState({});
     const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
-    const { cards } = useSelector(state => state.cards);
-    console.log(cards.items);
-    // setCurrentCard(cards)
+    const [totalValue, setTotalValue] = useState(0);
 
+    // load cards from Redux state
+    let state = useSelector(state => state.cards);
+    console.log(state)
+    
+    
     const { id } = useParams();
-    console.log(id)
-
     const navigate = useNavigate(); 
     const dispatch = useDispatch();
-    const {updateTotal, updateCard} = cardsSlice.actions
+    const { updateTotal, updateCard } = cardsSlice.actions
     
+    // receiving currentCard and totalValue from state
     useEffect(() => {
-      console.log(cards)
-      let currentItem = cards.items.find( item => item._id == id)
-      console.log(currentItem);
+      let currentItem = state.cards.items.find( item => item._id == id)
       setCurrentCard(currentItem)
-    }, [cards])
-
-    // we get data from Redux state
-    const state = useSelector(state => state.cards);
-    let totalValue;
-    totalValue = state.total;
-    if (isLoading == false) {console.log(state)}
-    console.log('totalValueFromState')
-    console.log(totalValue)
+      console.log("CurrentCard")
+      console.log(currentCard);
+      setTotalValue(state.total)
+      console.log('total value')
+      console.log(totalValue)
+    }, [state])
     
+    // load data from pouchDB
     useEffect(() => {
       console.log("Данні з PouchDB заванатажуємо до стейту")
       dispatch(loadDataFromPouchDB());
       setIsLoading(false);
     }, [dispatch]);
+
+    useEffect(() => {
+      const totalValue = total(currentCard.items);
+      setCoefficient(recalculation(currentCard.items, totalValue));
+      dispatch(updateTotal(totalValue));
+    }, [currentCard])
 
     const openConfirmDialog = () => {
       setConfirmDialogOpen(true);
@@ -74,6 +78,7 @@
       return sum;
     }
 
+    // block sleeping on smartphone
     useEffect( () => {
        requestWakeLock()
       }, []
@@ -86,9 +91,9 @@
         .then( (res) => {
           setCurrentCard(res.data);
           setIsLoading(false);
-          const totalValue = total(res.data.items);
-          setCoefficient(recalculation(res.data.items, totalValue));
-          dispatch(updateTotal(totalValue));
+          // const totalValue = total(res.data.items);
+          // setCoefficient(recalculation(res.data.items, totalValue));
+          // dispatch(updateTotal(totalValue));
         })
         .catch( (err) => {
           console.warn(err);
@@ -96,11 +101,11 @@
         });
     }, [])
 
-    if (!isLoading) {console.log(currentCard)}
-
     // recalculation card values from totalValue
     useEffect( () => {
       if (totalValue > 0 && currentCard && currentCard.items && coefficient) {
+        console.log('coefficient')
+        console.log(coefficient)
         let card = makeNewCard(currentCard.items, totalValue, coefficient)
         console.log(card);
         setCurrentCard({
@@ -111,6 +116,7 @@
       
     }, [totalValue] )
 
+    // handle deleting card
     const deleteCard = async () => {
         setConfirmDialogOpen(false);
         dispatch(fetchRemoveCard(id));
