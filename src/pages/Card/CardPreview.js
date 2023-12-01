@@ -23,22 +23,20 @@ import Paper from '@mui/material/Paper';
 const CardPreview = (
                       {
                         currentCard,
-                        items, 
                         totalValue,  
                         openConfirmDialog,
                         id
                       }
                     ) => {
 
-console.log(items)
-console.log(currentCard)
+console.log(currentCard);
 
 return (
     <>
       <div className={styles.wrapper} >
         <div className={styles.ingredientContainer} >
         <Box >
-          <h1 className={styles.header}>{currentCard.title || 'No Title'}</h1>
+          <h1 className={styles.header}>{currentCard?.title}</h1>
           <p>{currentCard.text}</p>
           <TableContainer component={Paper}>
             <Table sx={{ }} aria-label="simple table">
@@ -55,8 +53,6 @@ return (
                       key={item.name} 
                       name={item.name}
                       amount={item.quantity}
-                      recalc='cellll'
-                      
                     />
                   )
                   })}

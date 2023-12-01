@@ -1,4 +1,3 @@
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../../axios.js'
 import { pouchDB } from '../../pouchDB/pouch.js'
@@ -24,7 +23,7 @@ export const loadDataFromPouchDB = createAsyncThunk('cards/loadDataFromPouchDB',
   
 export const fetchCards = createAsyncThunk('cards/FetchCards', async () => {
 	const { data } = await axios.get('/cards')	
-	console.log("Данні з бекенда завантажені в стейт")
+	console.log("Данні з бекенда завантажуються в стейт")
 	console.log(data)
 	return data;
 })

@@ -1,17 +1,10 @@
   import React, { useEffect, useState } from 'react';
-  import { Ingredient } from './CardItems.js';
-  import { SliderCount } from './Slider.js';
   import { recalculation, makeNewCard } from './Recalculation.js';
   import styles from './card.module.css';
-  import Box from '@mui/material/Box';
-  import Button from '@mui/material/Button';
-  import ButtonGroup from '@mui/material/ButtonGroup';
-  import TextField from '@mui/material/TextField';
 
-  import ClearIcon from '@mui/icons-material/Clear';
   import { useDispatch, useSelector } from 'react-redux';
-  import { fetchRemoveCard, fetchCards } from '../../redux/slices/cards.js';
-  import { Link, useNavigate } from "react-router-dom";
+  import { fetchRemoveCard } from '../../redux/slices/cards.js';
+  import { useNavigate } from "react-router-dom";
   import {useParams} from 'react-router-dom';
   import axios from '../../axios.js';
   import Loading from '../../Components/Loading/Loading.js';
@@ -26,13 +19,10 @@
     const [isLoading, setIsLoading] = useState(true); // state for process of loading data from backend
     const [coefficient, setCoefficient] = useState({});
     const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
-    const [totalValue, setTotalValue] = useState(0);
+    const [totalValue, setTotalValue] = useState(1000);
 
     // load cards from Redux state
     let state = useSelector(state => state.cards);
-    console.log(state)
-    
-    
     const { id } = useParams();
     const navigate = useNavigate(); 
     const dispatch = useDispatch();
@@ -40,27 +30,60 @@
     
     // receiving currentCard and totalValue from state
     useEffect(() => {
-      let currentItem = state.cards.items.find( item => item._id == id)
+      let currentItem = state.cards.items.find( item => item._id === id)
+      console.log("CurrentItem")
+      console.log(state.cards.items)
+      console.log(id)
+      console.log(currentItem)
       setCurrentCard(currentItem)
       console.log("CurrentCard")
       console.log(currentCard);
       setTotalValue(state.total)
       console.log('total value')
       console.log(totalValue)
-    }, [state])
+    }, [state.cards])
     
     // load data from pouchDB
     useEffect(() => {
       console.log("Данні з PouchDB заванатажуємо до стейту")
-      dispatch(loadDataFromPouchDB());
-      setIsLoading(false);
+      async function fetchData() {
+        await dispatch(loadDataFromPouchDB());
+      }
+      fetchData();
     }, [dispatch]);
 
-    useEffect(() => {
-      const totalValue = total(currentCard.items);
-      setCoefficient(recalculation(currentCard.items, totalValue));
-      dispatch(updateTotal(totalValue));
-    }, [currentCard])
+    // receiving data from backend
+    useEffect( () => {
+      console.log('Завантажуємо данні картки з бекенда')
+      axios
+        .get(`cards/${id}`)
+        .then( (res) => {
+          console.log('Данні з бекенда завантажені')
+          console.log(res.data);
+          setCurrentCard(res.data);
+          console.log(currentCard)
+          setIsLoading(false);
+          const totalValue = total(res.data.items);
+          const calculatedCoefficient = recalculation(currentCard.items, totalValue);
+          setCoefficient(calculatedCoefficient);
+          dispatch(updateTotal(totalValue));
+        })
+        .catch( (err) => {
+          console.warn(err);
+          alert('Помилка при отриманні статті')
+        });
+    }, [id])
+
+// calculation coefficient
+useEffect(() => {
+  if (!currentCard || !currentCard.items) {
+    return; // Вихід, якщо currentCard або його властивість items є null або undefined
+  }
+
+  const calculatedCoefficient = recalculation(currentCard.items, totalValue);
+  setCoefficient(calculatedCoefficient);
+  dispatch(updateTotal(totalValue));
+}, [currentCard]);
 
     const openConfirmDialog = () => {
       setConfirmDialogOpen(true);
@@ -68,7 +91,7 @@
 
     // calculation of the amount of ingredients
     const total = (items) => {
-      if (!items) {
+      if (!items || !Array.isArray(items)) {
         return 0; // або інше значення за замовчуванням, якщо items відсутні
       }
       const sum = items.reduce( (acc, item) => {
@@ -84,26 +107,9 @@
       }, []
     )
 
-    // receiving data from backend
-    useEffect( () => {
-      axios
-        .get(`cards/${id}`)
-        .then( (res) => {
-          setCurrentCard(res.data);
-          setIsLoading(false);
-          // const totalValue = total(res.data.items);
-          // setCoefficient(recalculation(res.data.items, totalValue));
-          // dispatch(updateTotal(totalValue));
-        })
-        .catch( (err) => {
-          console.warn(err);
-          alert('Помилка при отриманні статті')
-        });
-    }, [])
-
     // recalculation card values from totalValue
     useEffect( () => {
-      if (totalValue > 0 && currentCard && currentCard.items && coefficient) {
+      if (totalValue > 0 && currentCard && currentCard.items && Object.keys(coefficient).length > 0) {
         console.log('coefficient')
         console.log(coefficient)
         let card = makeNewCard(currentCard.items, totalValue, coefficient)

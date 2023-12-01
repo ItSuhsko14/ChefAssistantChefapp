@@ -8,6 +8,7 @@ export const saveStateToPouchDB = (store) => (next) => (action) => {
 
   // Зберегти оновлений стан в PouchDB
   const pouchState = store.getState();
+  console.log(pouchState);
   console.log(pouchState.cards.cards.items);
   pouchDB.get('pouchstate').then(function (doc) {
     // Отримати поточну ревізію документа

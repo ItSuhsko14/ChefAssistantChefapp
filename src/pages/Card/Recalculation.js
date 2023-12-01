@@ -24,14 +24,14 @@ export const recalculation = (items, total) => {
 export const makeNewCard = (oldCard, totalValue, coefficient) => {
     let newArray;
     if (Array.isArray(oldCard)) {
-        console.log('oldCard exist')
-        console.log(coefficient);
-        console.log(oldCard)
+        // console.log('oldCard exist')
+        // console.log(coefficient);
+        // console.log(oldCard)
 
         newArray = oldCard.map( (item, index) => {
-            console.log(item.name)
-            console.log(coefficient[index].coefficient);
-            console.log(item)
+            // console.log(item.name)
+            // console.log(coefficient[index].coefficient);
+            // console.log(item)
             return {
                 name: item.name,
                 quantity: Math.round(totalValue*coefficient[index].coefficient),
