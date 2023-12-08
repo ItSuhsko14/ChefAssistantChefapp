@@ -61,11 +61,11 @@ export const cardsSlice = createSlice({
 		  },
 	},
 	extraReducers: {
-		[loadDataFromPouchDB.fulfilled]: (state, action) => {
-			// Оновлення поля pouchDBData з отриманими даними з PouchDB
-			console.log(action.payload)
-			state.cards.items = action.payload;
-		  },
+		// [loadDataFromPouchDB.fulfilled]: (state, action) => {
+		// 	// Оновлення поля pouchDBData з отриманими даними з PouchDB
+		// 	console.log(action.payload)
+		// 	state.cards.items = action.payload;
+		//   },
 		// додавання карток
 		[fetchCards.pending]: (state, action) => {
 			state.cards.items = [];

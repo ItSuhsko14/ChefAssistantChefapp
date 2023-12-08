@@ -1,12 +1,14 @@
 // Calculation coefficients for each engredient
 export const recalculation = (items, total) => {
     console.log('Recalculation')
-    console.log(items)
-    console.log(total)
+    // console.log(items)
+    // console.log('total=',total)
     let baseArray = {}
     if(items) {
         console.log('items exist')
         baseArray = items.map( (item) => {
+            // console.log(item);
+            // console.log(item.quantity/total)
             return{
                 name: item.name,
                 coefficient: item.quantity/total

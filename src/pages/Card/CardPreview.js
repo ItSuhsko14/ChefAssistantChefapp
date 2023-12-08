@@ -29,7 +29,7 @@ const CardPreview = (
                       }
                     ) => {
 
-console.log(currentCard);
+// console.log(currentCard);
 
 return (
     <>

@@ -1,4 +1,4 @@
-  import React, { useEffect, useState } from 'react';
+  import React, { useEffect, useState, useMemo } from 'react';
   import { recalculation, makeNewCard } from './Recalculation.js';
   import styles from './card.module.css';
 
@@ -15,42 +15,42 @@
   import { loadDataFromPouchDB } from '../../redux/slices/cards.js';
 
   function MyCard(props) {
+    console.log('COMPONENT CARD')
     const [currentCard, setCurrentCard] = useState({}); // data of current card
     const [isLoading, setIsLoading] = useState(true); // state for process of loading data from backend
     const [coefficient, setCoefficient] = useState({});
     const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
-    const [totalValue, setTotalValue] = useState(1000);
+    const [totalValue, setTotalValue] = useState(0);
 
-    // load cards from Redux state
+    // load state from Redux state and other parameters
+    // console.log('Load cards from Redux state')
     let state = useSelector(state => state.cards);
     const { id } = useParams();
     const navigate = useNavigate(); 
     const dispatch = useDispatch();
     const { updateTotal, updateCard } = cardsSlice.actions
+  //   console.log('State', state);
+  //   console.log('id=' + id);
+    
     
     // receiving currentCard and totalValue from state
     useEffect(() => {
-      let currentItem = state.cards.items.find( item => item._id === id)
-      console.log("CurrentItem")
-      console.log(state.cards.items)
-      console.log(id)
-      console.log(currentItem)
-      setCurrentCard(currentItem)
-      console.log("CurrentCard")
-      console.log(currentCard);
+      console.log('Receiving currentCard and totalValue from state')
+      // let currentItem = state.cards.items.find( item => item._id === id)
+      // console.log('CurrentItem', currentItem);
+      // setCurrentCard(currentItem)
       setTotalValue(state.total)
-      console.log('total value')
-      console.log(totalValue)
-    }, [state.cards])
+      // console.log('total value=' + totalValue);
+    }, [state])
     
-    // load data from pouchDB
-    useEffect(() => {
-      console.log("Данні з PouchDB заванатажуємо до стейту")
-      async function fetchData() {
-        await dispatch(loadDataFromPouchDB());
-      }
-      fetchData();
-    }, [dispatch]);
+  //   // // load data from pouchDB
+  //   // useEffect(() => {
+  //   //   console.log("Данні з PouchDB заванатажуємо до стейту")
+  //   //   async function fetchData() {
+  //   //     await dispatch(loadDataFromPouchDB());
+  //   //   }
+  //   //   fetchData();
+  //   // }, [dispatch]);
 
     // receiving data from backend
     useEffect( () => {
@@ -59,31 +59,23 @@
         .get(`cards/${id}`)
         .then( (res) => {
           console.log('Данні з бекенда завантажені')
-          console.log(res.data);
-          setCurrentCard(res.data);
-          console.log(currentCard)
+          // console.log('Завантажені данні - ', res.data);
+          let currentCardValue = res.data;
+          // console.log('currentCardValue = ', currentCardValue)
+          setCurrentCard(currentCardValue);            
+          const valueTotal = total(res.data.items);
+          setTotalValue(valueTotal);
+          dispatch(updateTotal(valueTotal))
           setIsLoading(false);
-          const totalValue = total(res.data.items);
-          const calculatedCoefficient = recalculation(currentCard.items, totalValue);
-          setCoefficient(calculatedCoefficient);
-          dispatch(updateTotal(totalValue));
+          const recalculationValue = recalculation(currentCardValue.items, valueTotal);
+          // console.log('recalculationValue =', recalculationValue);
+          setCoefficient(recalculationValue);
         })
         .catch( (err) => {
           console.warn(err);
           alert('Помилка при отриманні статті')
-        });
+        })
     }, [id])
-
-// calculation coefficient
-useEffect(() => {
-  if (!currentCard || !currentCard.items) {
-    return; // Вихід, якщо currentCard або його властивість items є null або undefined
-  }
-
-  const calculatedCoefficient = recalculation(currentCard.items, totalValue);
-  setCoefficient(calculatedCoefficient);
-  dispatch(updateTotal(totalValue));
-}, [currentCard]);
 
     const openConfirmDialog = () => {
       setConfirmDialogOpen(true);
@@ -97,30 +89,29 @@ useEffect(() => {
       const sum = items.reduce( (acc, item) => {
         return acc + item.quantity
       }, 0)
-      console.log(sum)
+      console.log('Calculation was ended. Total - ', sum);
       return sum;
     }
 
-    // block sleeping on smartphone
-    useEffect( () => {
-       requestWakeLock()
-      }, []
-    )
+  //   // block sleeping on smartphone
+  //   useEffect( () => {
+  //      requestWakeLock()
+  //     }, []
+  //   )
 
     // recalculation card values from totalValue
     useEffect( () => {
-      if (totalValue > 0 && currentCard && currentCard.items && Object.keys(coefficient).length > 0) {
-        console.log('coefficient')
-        console.log(coefficient)
+      console.log('Recalculation card values')
+      if (totalValue > 1 && currentCard && currentCard.items && Object.keys(coefficient).length > 0) {
+        // console.log('coefficient =', coefficient);
         let card = makeNewCard(currentCard.items, totalValue, coefficient)
-        console.log(card);
+        // console.log(card);
         setCurrentCard({
           ...currentCard,
           items: card,
         });
-      }
-      
-    }, [totalValue] )
+      }      
+    }, [totalValue, coefficient] )
 
     // handle deleting card
     const deleteCard = async () => {

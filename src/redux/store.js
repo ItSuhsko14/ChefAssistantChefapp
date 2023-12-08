@@ -8,8 +8,8 @@ const store = configureStore({
 		cards: cardReducer,
 		auth: authReducer,
 	},
-	middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(saveStateToPouchDB),
+	// middleware: (getDefaultMiddleware) =>
+    // getDefaultMiddleware().concat(saveStateToPouchDB),
 })
 
 export default store;
