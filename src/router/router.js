@@ -1,6 +1,7 @@
 import { createHashRouter } from 'react-router-dom';
 import { createBrowserRouter } from 'react-router-dom';
 import AllCards from '../pages/AllCards/AllCards.js'
+import Components from '../pages/Components/Components.js'
 import Login from '../pages/Login/login.js'
 import ErrorPage from '../pages/Error/ErrorPage.js'
 import Registration from '../pages/Registration/Registration.js'
@@ -36,6 +37,12 @@ export const router = createHashRouter([
                 element: <AllCards />,
                 errorElement: <ErrorPage />,
                 breadcrumb: "Всі картки"
+              },
+              {
+                path: "/components",
+                element: <Components />,
+                errorElement: <ErrorPage />,
+                breadcrumb: "Всі інгридієнти"
               },
               {
                 path: "login",

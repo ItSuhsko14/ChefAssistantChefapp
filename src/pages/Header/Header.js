@@ -31,6 +31,10 @@ export const mainMenu = [
 								link:'addCard'
 							},
 							{
+								text:'Інгерієнти',
+								link:'components'
+							},
+							{
 								text:'Про додаток',
 								link:'AboutUs'
 							},

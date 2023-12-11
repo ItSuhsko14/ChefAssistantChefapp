@@ -17,19 +17,21 @@ function GaetAll() {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const { cards } = useSelector(state => state.cards);
-  
-  console.log("Card status");
-  console.log(cards.status);
-
+  console.log(cards)
   useEffect(() => {
     console.log("Данні з PouchDB заванатажуємо до стейту")
     dispatch(loadDataFromPouchDB());
-    setIsLoading(false);
+    // setIsLoading(false);
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchCards())
-    setIsLoading(false);
+    const fetchData = async () => {
+      console.log('Завантажуємо данні з бекенда');
+      await dispatch(fetchCards());
+      setIsLoading(false);
+    };
+  
+    fetchData();
   }, [])
 
   const {updateCards} = cardsSlice.actions
