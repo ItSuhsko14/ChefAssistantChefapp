@@ -3,28 +3,23 @@ import axios from '../../axios.js'
 import { pouchDB } from '../../pouchDB/pouch.js'
 
 export const loadDataFromPouchDB = createAsyncThunk('cards/loadDataFromPouchDB', async () => {
-	console.log("LoadDataFromPouchDB")
+	console.log('loadDataFromPouchDB')
 	try {
-	  // Здійснюємо завантаження даних з PouchDB
-	  const response = await pouchDB.get('pouchstate');
-  
-	  // Отримані дані з PouchDB
-	  const pouchDBData = response.data; // Дані були збережені як поле "data" у об'єкті
-	  console.log(pouchDBData);
-  
-	  // Повертаємо отримані дані з PouchDB
-	  return pouchDBData;
+	  const result = await pouchDB.allDocs({ include_docs: true });
+	  const documents = result.rows.map(row => row.doc);
+	  console.log('Дані з PouchDB завантажено до стейту Redux:', documents);
+	  return documents;
 	} catch (error) {
-	  // Обробка помилок, якщо завантаження не вдалося
-	  console.error('Помилка завантаження даних з PouchDB:', error);
-	  throw error; // Ви можете кинути помилку, якщо необхідно
+	  console.error('Помилка при завантаженні даних з PouchDB:', error);
+	  throw error;
 	}
   });
   
+// download cards data from backend
 export const fetchCards = createAsyncThunk('cards/FetchCards', async () => {
-	const { data } = await axios.get('/cards')	
 	console.log("Данні з бекенда завантажуються в стейт")
-	console.log(data)
+	const { data } = await axios.get('/cards')	
+	console.log('Отримали данні: ', data)
 	return data;
 })
 
@@ -61,11 +56,11 @@ export const cardsSlice = createSlice({
 		  },
 	},
 	extraReducers: {
-		// [loadDataFromPouchDB.fulfilled]: (state, action) => {
-		// 	// Оновлення поля pouchDBData з отриманими даними з PouchDB
-		// 	console.log(action.payload)
-		// 	state.cards.items = action.payload;
-		//   },
+		[loadDataFromPouchDB.fulfilled]: (state, action) => {
+			// Оновлення поля pouchDBData з отриманими даними з PouchDB
+			console.log(action.payload)
+			state.cards.items = action.payload;
+		  },
 		// додавання карток
 		[fetchCards.pending]: (state, action) => {
 			state.cards.items = [];

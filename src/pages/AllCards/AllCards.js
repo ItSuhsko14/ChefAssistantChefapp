@@ -10,32 +10,74 @@ import { DndProvider } from 'react-dnd'; // Замініть імпорт
 import { TouchBackend } from 'react-dnd-touch-backend'; // Додайте імпорт для сенсорних екранів
 import { cardsSlice } from '../../redux/slices/cards.js';
 import { loadDataFromPouchDB } from '../../redux/slices/cards.js';
+import { pouchDB } from '../../pouchDB/pouch.js'
 
 function GaetAll() {
   
   console.log('Всі картки почались')
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+  console.log('Отримуємо значення карток зі стейта')
   const { cards } = useSelector(state => state.cards);
-  console.log(cards)
+  console.log('Данні карток: ', cards)
+  
+  // download data from PouchDB
   useEffect(() => {
-    console.log("Данні з PouchDB заванатажуємо до стейту")
     dispatch(loadDataFromPouchDB());
-    // setIsLoading(false);
   }, [dispatch]);
 
+  // download from backend
   useEffect(() => {
-    const fetchData = async () => {
-      console.log('Завантажуємо данні з бекенда');
-      await dispatch(fetchCards());
-      setIsLoading(false);
+    const fetchDataAndSaveToPouchDB = async () => {
+      try {
+        // Отримуємо дані з бекенда
+        const data = await dispatch(fetchCards());
+  
+        // Створення унікального _id (можете використовувати, наприклад, timestamp)
+        const uniqueId = new Date().toISOString();
+  
+        // Логіка для зберігання отриманих даних в PouchDB
+        console.log('Put data in PouchDB');
+        console.log(data.payload);
+        await pouchDB.put({
+          _id: uniqueId, // унікальний ідентифікатор
+          data: data.payload,
+        });
+  
+        console.log('Дані з бекенда завантажуються в стейт та зберігаються в PouchDB');
+        console.log(data);
+  
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Помилка завантаження даних та зберігання їх в PouchDB:', error);
+        setIsLoading(false);
+      }
     };
   
-    fetchData();
-  }, [])
+    fetchDataAndSaveToPouchDB();
+    
+  }, [dispatch, setIsLoading]);
 
+  // Отримати всі документи з локальної бази даних PouchDB
+  const getAllDocuments = async () => {
+    try {
+      const result = await pouchDB.allDocs({ include_docs: true });
+      const documents = result.rows.map(row => row.doc);
+      console.log('Дані з PouchDB:', documents);
+      return documents;
+    } catch (error) {
+      console.error('Помилка при отриманні документів з PouchDB:', error);
+      throw error; // Прокинути помилку, якщо вона є
+    }
+  };
+
+// Викликати функцію для виводу даних в консоль
+getAllDocuments();
+
+  
   const {updateCards} = cardsSlice.actions
 
+  // moving card positions
   const handleDragEnd = (result) => {
     if (!result.destination) {
       return;

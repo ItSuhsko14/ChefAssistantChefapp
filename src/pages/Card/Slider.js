@@ -18,7 +18,7 @@ export const SliderCount = () => {
     const dispatch = useDispatch();
     
     const state = useSelector(state => state.cards);
-    console.log('state=',state.total)
+    // console.log('state=',state.total)
     let totalValue;
     
     useEffect(() => {
