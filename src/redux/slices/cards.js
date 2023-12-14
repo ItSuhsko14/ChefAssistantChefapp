@@ -8,7 +8,7 @@ export const loadDataFromPouchDB = createAsyncThunk('cards/loadDataFromPouchDB',
 	  const result = await pouchDB.allDocs({ include_docs: true });
 	  const documents = result.rows.map(row => row.doc);
 	  console.log('Дані з PouchDB завантажено до стейту Redux:', documents);
-	  return documents;
+	  return documents[documents.length-1].data;
 	} catch (error) {
 	  console.error('Помилка при завантаженні даних з PouchDB:', error);
 	  throw error;

@@ -36,9 +36,10 @@
     // receiving currentCard and totalValue from state
     useEffect(() => {
       console.log('Receiving currentCard and totalValue from state')
-      // let currentItem = state.cards.items.find( item => item._id === id)
-      // console.log('CurrentItem', currentItem);
-      // setCurrentCard(currentItem)
+      let currentItem = state.cards.items.find( item => item._id === id)
+      console.log('CurrentItem', currentItem);
+      setCurrentCard(currentItem)
+      setIsLoading(false)
       setTotalValue(state.total)
       // console.log('total value=' + totalValue);
     }, [state])
@@ -73,7 +74,6 @@
         })
         .catch( (err) => {
           console.warn(err);
-          alert('Помилка при отриманні статті')
         })
     }, [id])
 

@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import Autocomplete from '@mui/material/Autocomplete';
 
 export const Ingredient = (props) => {
 	return (
@@ -32,6 +33,7 @@ export const Ingredient = (props) => {
 export const IngredientInput = (props) => {
 	const register = props.register;
 	const removeItem = props.removeItem;
+	const index = props.index;
 	return (
 		<>
 			<Grid container 
@@ -42,11 +44,17 @@ export const IngredientInput = (props) => {
 			>
 				
                 <Grid item xs={7}>
-            		<TextField 
-						{...register(`items.${props.index}.name`)}  
-						variant="outlined" 
-						type="text" 
-					/>
+					{/* <Autocomplete
+						options={[
+							{ id: 1, name: 'борошно' },
+							{ id: 2, name: 'манітоба' },
+							{ id: 3, name: 'спельта' },
+						  ]}
+						getOptionLabel={(option) => option.name}
+						renderInput={(params) => ( */}
+						<TextField  variant="outlined" type="text" {...register(`items.${index}.name`)} />
+						{/* )}
+					/> */}
                 </Grid>
                 <Grid item xs={3}>
                 	<TextField 

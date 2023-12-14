@@ -108,7 +108,7 @@ function AddCard(props) {
               <TextField 
                 onClick={onChange}
                 className={styles.cardNameInput} 
-                label="Card name" 
+                label="Назва" 
                 variant="outlined" 
                 error={Boolean(errors.cardName?.message)}
                 helperText={errors.cardName?.message}
@@ -118,7 +118,7 @@ function AddCard(props) {
             <div className={styles.header}>
               <TextField 
                 className={styles.cardNameInput} 
-                label="Card text" 
+                label="Опис" 
                 variant="outlined" 
                 error={Boolean(errors.cardText?.message)}
                 helperText={errors.cardText?.message}

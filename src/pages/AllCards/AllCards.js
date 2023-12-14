@@ -23,19 +23,21 @@ function GaetAll() {
   
   // download data from PouchDB
   useEffect(() => {
-    dispatch(loadDataFromPouchDB());
+      console.time('loadDataFromPouchDB'); // початок вимірювання часу
+      dispatch(loadDataFromPouchDB())
   }, [dispatch]);
 
   // download from backend
   useEffect(() => {
+    console.time('fetchDataAndSaveToPouchDB'); // початок вимірювання часу
     const fetchDataAndSaveToPouchDB = async () => {
       try {
         // Отримуємо дані з бекенда
         const data = await dispatch(fetchCards());
-  
+
         // Створення унікального _id (можете використовувати, наприклад, timestamp)
         const uniqueId = new Date().toISOString();
-  
+
         // Логіка для зберігання отриманих даних в PouchDB
         console.log('Put data in PouchDB');
         console.log(data.payload);
@@ -43,27 +45,31 @@ function GaetAll() {
           _id: uniqueId, // унікальний ідентифікатор
           data: data.payload,
         });
-  
+
         console.log('Дані з бекенда завантажуються в стейт та зберігаються в PouchDB');
         console.log(data);
-  
+
         setIsLoading(false);
       } catch (error) {
         console.error('Помилка завантаження даних та зберігання їх в PouchDB:', error);
         setIsLoading(false);
+      } finally {
+        console.timeEnd('fetchDataAndSaveToPouchDB'); // кінець вимірювання часу
       }
     };
-  
-    fetchDataAndSaveToPouchDB();
-    
-  }, [dispatch, setIsLoading]);
 
+    fetchDataAndSaveToPouchDB();
+}, [dispatch, setIsLoading]);
+  
   // Отримати всі документи з локальної бази даних PouchDB
   const getAllDocuments = async () => {
     try {
       const result = await pouchDB.allDocs({ include_docs: true });
+      // const res = await pouchDB.get();
+      console.log(pouchDB)
+      // console.log(res)
       const documents = result.rows.map(row => row.doc);
-      console.log('Дані з PouchDB:', documents);
+      console.log('Дані з PouchDB:', documents[documents.length-1].data, documents.length);
       return documents;
     } catch (error) {
       console.error('Помилка при отриманні документів з PouchDB:', error);
