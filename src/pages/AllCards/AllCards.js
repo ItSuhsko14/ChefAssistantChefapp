@@ -66,7 +66,7 @@ function GaetAll() {
     try {
       const result = await pouchDB.allDocs({ include_docs: true });
       // const res = await pouchDB.get();
-      console.log(pouchDB)
+      
       // console.log(res)
       const documents = result.rows.map(row => row.doc);
       console.log('Дані з PouchDB:', documents[documents.length-1].data, documents.length);

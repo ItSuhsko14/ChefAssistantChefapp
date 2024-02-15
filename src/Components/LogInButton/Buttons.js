@@ -30,23 +30,17 @@ export const LogInButton = () => {
 		)
 	}
 
-
-
-
-
 export const LogOutButton = () => {
 
 	const isAuth = useSelector(selectIsAuth);
-		const onClickLogOut = () => {
-			console.log("isAuth");
-			console.log(isAuth);
-			console.log("click logout");
-			dispatch(logout());	
-			console.log("isAuth");
-			console.log(isAuth);
-			window.localStorage.removeItem('token')
-			
-		}
+	const onClickLogOut = () => {
+		console.log(`isAuth ${isAuth}`);
+		console.log("click logout");
+		dispatch(logout());	
+		console.log(`isAuth ${isAuth}`);
+		window.localStorage.removeItem('token')
+		
+	}
 
 		const dispatch = useDispatch();
 	
