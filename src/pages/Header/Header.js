@@ -163,6 +163,9 @@ const isAuth = useSelector(selectIsAuth);
 				sx={{ marginTop: 10 }}
 				className={styles.breadrumb}
 			/>
+			<div>
+				{isAuth ? <p>Користувач авторизований</p> : <p>Користувач не авторизований</p>}
+			</div>
 		</Box>
 	)
 }
